@@ -60,7 +60,7 @@ const RegistrationForm = () => {
 
     // Terms and conditions validation
     if (!formData.termsAccepted) {
-      newErrors.termsAccepted = "You must accept the terms and conditions.";
+      newErrors.termsAccepted = "You must accept the Terms and Conditions.";
     }
 
     setErrors(newErrors);

@@ -82,6 +82,11 @@ h2 {
   font-size: 14px;
 }
 
+/* .terms input {
+  width: auto;
+  margin: 0;
+} */
+
 .terms input {
   width: auto;
   margin: 0;
