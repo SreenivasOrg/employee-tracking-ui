@@ -80,7 +80,7 @@ const RegistrationForm = () => {
       <form className="registration-form" onSubmit={handleSubmit}>
         <h2>Registration</h2>
 
-        {/* Username */}
+        
         <div className="form-group">
           <FaUser className="form-icon" />
           <input
