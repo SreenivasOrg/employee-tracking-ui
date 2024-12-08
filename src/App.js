@@ -1,12 +1,19 @@
 import React from "react";
-import RegisterForm from "./components/registrationForm/RegisterForm";
+import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
+import LoginForm from "./components/LoginForm/LoginForm";
+import Forgot from "./components/Forgot/Forgot";
+// import RegisterForm from "./components/registrationForm/RegisterForm";
 
 
 function App() {
   return (
-    <div className="App">
-      <RegisterForm />
-    </div>
+    <Router>
+    <Routes>
+      <Route path="/" element={<LoginForm/>}/>
+      <Route path="/Components/Forgot/Forgot" element={<Forgot/>}/>
+      <Route path="/login" element={<LoginForm />} />
+    </Routes>
+    </Router>
   );
 }
 
