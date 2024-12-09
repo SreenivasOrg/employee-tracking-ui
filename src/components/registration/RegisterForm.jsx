@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-// import "./../styles/RegisterForm.css";
+import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa'; // Importing icons
 import './RegisterForm.css';
-
-
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +60,7 @@ const RegistrationForm = () => {
 
     // Terms and conditions validation
     if (!formData.termsAccepted) {
-      newErrors.termsAccepted = "You must accept the terms and conditions.";
+      newErrors.termsAccepted = "You must accept the Terms and Conditions.";
     }
 
     setErrors(newErrors);
@@ -82,8 +80,9 @@ const RegistrationForm = () => {
       <form className="registration-form" onSubmit={handleSubmit}>
         <h2>Registration</h2>
 
-        {/* Username */}
+        
         <div className="form-group">
+          <FaUser className="form-icon" />
           <input
             type="text"
             name="username"
@@ -92,11 +91,13 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
+          {/* <i className="icon-user"></i> */}
           {errors.username && <p className="error">{errors.username}</p>}
         </div>
 
         {/* Email */}
         <div className="form-group">
+          <FaEnvelope className="form-icon" />
           <input
             type="email"
             name="email"
@@ -105,11 +106,13 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
+          <i className="icon-email"></i>
           {errors.email && <p className="error">{errors.email}</p>}
         </div>
 
         {/* Password */}
         <div className="form-group">
+          <FaLock className="form-icon" />
           <input
             type="password"
             name="password"
@@ -118,11 +121,13 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
+           <i className="icon-password"></i>
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
         {/* Confirm Password */}
         <div className="form-group">
+          <FaLock className="form-icon" />
           <input
             type="password"
             name="confirmPassword"
@@ -131,13 +136,13 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-          {errors.confirmPassword && (
-            <p className="error">{errors.confirmPassword}</p>
-          )}
+           <i className="icon-password"></i>
+          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
         </div>
 
         {/* Contact */}
         <div className="form-group">
+          <FaPhone className="form-icon" />
           <input
             type="text"
             name="contact"
@@ -146,11 +151,13 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
+           <i className="icon-password"></i>
           {errors.contact && <p className="error">{errors.contact}</p>}
         </div>
 
         {/* Terms and Conditions */}
         <div className="terms">
+          
           <input
             type="checkbox"
             name="termsAccepted"
@@ -159,15 +166,16 @@ const RegistrationForm = () => {
             required
           />
           <label>I agree to the terms & conditions</label>
-          {errors.termsAccepted && (
-            <p className="error">{errors.termsAccepted}</p>
-          )}
+          {errors.termsAccepted && <p className="error">{errors.termsAccepted}</p>}
         </div>
 
         {/* Submit Button */}
         <button type="submit" className="register-button">
           Register
         </button>
+        <p className="login-link">
+          Already have an account? <a href="#">Login</a>
+        </p>
       </form>
     </div>
   );
