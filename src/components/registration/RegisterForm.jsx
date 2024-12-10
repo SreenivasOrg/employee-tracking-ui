@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa'; // Importing icons
+import { FaUser, FaEnvelope, FaLock, FaPhone } from 'react-icons/fa';
 import './RegisterForm.css';
 
 const RegistrationForm = () => {
@@ -8,11 +9,12 @@ const RegistrationForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    contact: "",
+    contactNo: "", 
     termsAccepted: false,
   });
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(""); // For success feedback
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -25,62 +27,74 @@ const RegistrationForm = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Username validation
-    if (!formData.username.trim()) {
-      newErrors.username = "Username is required.";
-    }
-
-    // Email validation
+    // Validation logic (same as before)
+    if (!formData.username.trim()) newErrors.username = "Username is required.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      newErrors.email = "Email is required.";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Invalid email format.";
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Password is required.";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long.";
-    }
-
-    // Confirm password validation
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match.";
-    }
-
-    // Contact number validation
+    if (!formData.email) newErrors.email = "Email is required.";
+    else if (!emailRegex.test(formData.email)) newErrors.email = "Invalid email format.";
+    if (!formData.password) newErrors.password = "Password is required.";
+    else if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters long.";
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
     const contactRegex = /^[0-9]{10}$/;
-    if (!formData.contact) {
-      newErrors.contact = "Contact number is required.";
-    } else if (!contactRegex.test(formData.contact)) {
-      newErrors.contact = "Contact number must be 10 digits.";
-    }
-
-    // Terms and conditions validation
-    if (!formData.termsAccepted) {
-      newErrors.termsAccepted = "You must accept the Terms and Conditions.";
-    }
+    if (!formData.contactNo) newErrors.contactNo = "Contact number is required.";
+    else if (!contactRegex.test(formData.contactNo)) newErrors.contactNo = "Contact number must be 10 digits.";
+    if (!formData.termsAccepted) newErrors.termsAccepted = "You must accept the terms and conditions.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     if (validateForm()) {
-      console.log("Form Data Submitted:", formData);
-      alert("Registration successful!");
+      try {
+        const response = await fetch("http://localhost:8080/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+            confirmPassword: formData.confirmPassword,
+            contactNo: formData.contactNo, // Match backend property name
+          }),
+        });
+  
+        if (response.ok) {
+          const message = await response.text();
+          alert(message); // Show success message
+          console.log("User registered successfully!");
+          setFormData({
+            username: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            contactNo: "", // Reset the contact number field
+            termsAccepted: false,
+          });
+        } else {
+          const errorMessage = await response.text();
+          alert(`Registration failed: ${errorMessage}`);
+        }
+      } catch (error) {
+        console.error("Error occurred during registration:", error);
+        alert("An error occurred. Please try again.");
+      }
     }
   };
-
+  
   return (
     <div className="registration-container">
       <form className="registration-form" onSubmit={handleSubmit}>
         <h2>Registration</h2>
 
-        
+        {successMessage && <p className="success">{successMessage}</p>}
+        {errors.apiError && <p className="error">{errors.apiError}</p>}
+
+        {/* Username */}
         <div className="form-group">
           <FaUser className="form-icon" />
           <input
@@ -91,7 +105,6 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-          {/* <i className="icon-user"></i> */}
           {errors.username && <p className="error">{errors.username}</p>}
         </div>
 
@@ -106,7 +119,6 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-          <i className="icon-email"></i>
           {errors.email && <p className="error">{errors.email}</p>}
         </div>
 
@@ -121,7 +133,6 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-           <i className="icon-password"></i>
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
 
@@ -136,28 +147,25 @@ const RegistrationForm = () => {
             onChange={handleChange}
             required
           />
-           <i className="icon-password"></i>
           {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
         </div>
 
-        {/* Contact */}
+        {/* Contact Number */}
         <div className="form-group">
           <FaPhone className="form-icon" />
           <input
             type="text"
-            name="contact"
+            name="contactNo"
             placeholder="Contact Number"
-            value={formData.contact}
+            value={formData.contactNo}
             onChange={handleChange}
             required
           />
-           <i className="icon-password"></i>
-          {errors.contact && <p className="error">{errors.contact}</p>}
+          {errors.contactNo && <p className="error">{errors.contactNo}</p>}
         </div>
 
         {/* Terms and Conditions */}
         <div className="terms">
-          
           <input
             type="checkbox"
             name="termsAccepted"
