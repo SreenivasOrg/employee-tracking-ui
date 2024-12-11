@@ -31,14 +31,13 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/reports" className="nav-item">
-              Reports
+            <Link to="/user-dashboard" className="nav-item">
+              User Dashboard
             </Link>
           </li>
         </ul>
-        <div className="auth-buttons">
-          <button className="btn sign-in">Sign In</button>
-          <button className="btn sign-up">Sign Up</button>
+       <div className="auth-buttons">
+          <Link to="/login" className="nav-item" ><button className="btn sign-in">Sign Out</button> </Link>
         </div>
       </nav>
     </header>
