@@ -14,7 +14,7 @@ const App = () => (
         <Route path="/" element={<h2>Welcome to APCPDCL</h2>} />
         <Route path="/dashboard" element={<DashboardInsights />} />
         <Route path="/employees" element={<EmployeeTable />} />
-        <Route path="/reports" element={<h2>Reports Section Coming Soon</h2>} />
+        <Route path="/user-dashboard" element={<h2>Individual User Dashboard</h2>} />
       </Routes>
     </div>
   </Router>
