@@ -23,7 +23,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          change react app
         </a>
         <h1>React is a Java script library</h1>
       </header>
