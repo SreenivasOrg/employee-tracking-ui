@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a>
+        <h1>React is a Java script library</h1>
       </header>
     </div>
   );
