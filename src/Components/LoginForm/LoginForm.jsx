@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import "./LoginForm.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from "axios";
 
-const LoginForm = () => {
+const LoginForm = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [loginMessage, setLoginMessage] = useState("");
 
+  const navigate = useNavigate(); 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -54,7 +55,12 @@ const LoginForm = () => {
           }
         );
 
-        setLoginMessage(response.data.message || "Login successful!");
+        if (response.data.success) {
+          onLoginSuccess(); // Update authentication status
+          navigate("/dashboard"); // Redirect to dashboard
+        } else {
+          setLoginMessage(response.data.message || "Login failed. Please try again.");
+        }
       } catch (error) {
         console.error("Login failed:", error);
         setLoginMessage("Login failed. Please try again.");
