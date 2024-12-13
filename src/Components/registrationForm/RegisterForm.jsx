@@ -179,7 +179,7 @@ const RegisterForm = () => {
 
         {/* Submit Button */}
         <button type="submit" className="register-button">
-          Register
+          <Link to="/login">Register</Link>
         </button>
         <p className="login-link">
           Already have an account? <Link to="/login">Login</Link>
