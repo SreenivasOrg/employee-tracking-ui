@@ -103,6 +103,12 @@
   .register-button:hover {
     background-color: lightseagreen;
   }
+
+.register-button a {
+    text-decoration: none;  
+    color: white;           
+   
+}
   
   .error {
     color: red;
